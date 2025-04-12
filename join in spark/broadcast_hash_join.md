@@ -38,6 +38,7 @@ sales_df (Large) is partitioned across Executors.
 store_df (Small) exists as a DataFrame, known to the Driver.
 
 
+```text
 +---------------------+          +-----------------------+      +-----------------------+
 |    [ Spark Driver ] |          |    [ Executor 1 ]     |      |    [ Executor 2 ]     |
 |                     |          |-----------------------|      |-----------------------|
