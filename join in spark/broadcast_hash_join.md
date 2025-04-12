@@ -32,6 +32,35 @@ Spark's Catalyst optimizer automatically decides whether to use a Broadcast Hash
 * **Driver Bottleneck:** Collecting the small table on the driver can become a bottleneck if the table is near the threshold size or if many broadcast joins happen concurrently.
 * **Executor Memory:** Requires sufficient executor memory.
 
+*  **Initial State:**
+
+sales_df (Large) is partitioned across Executors.
+store_df (Small) exists as a DataFrame, known to the Driver.
+
++---------------------+          +-----------------------+      +-----------------------+
+|    [ Spark Driver ] |          |    [ Executor 1 ]     |      |    [ Executor 2 ]     |
+|                     |          |-----------------------|      |-----------------------|
+| Knows about:        |          | sales_df Partition 1  |      | sales_df Partition 2  |
+|  - sales_df (Large) |          | (1, 101, 50.0)        |      | (2, 102, 150.0)       |
+|  - store_df (Small) |          | (3, 101, 75.0)        |      | (5, 102, 200.0)       |
+|                     |          | (6, 101, 90.0)        |      | (4, 103, 25.0)        |
+|                     |          | (9, 101, 65.0)        |      | (8, 103, 45.0)        |
++---------------------+          | (7, 104, 120.0)       |      |  ... (more rows) ...  |
+                                 +-----------------------+      +-----------------------+
+                                     (Other Executors...)
+
+      Small DataFrame (store_df):
+      +----------+-----------------+----------+
+      | store_id | store_name      | city     |
+      +----------+-----------------+----------+
+      | 101      | Main St Store   | New York |
+      | 102      | Oak Ave Shop    | London   |
+      | 103      | Pine Plaza      | Tokyo    |
+      | 105      | Elm Center      | Paris    |
+      +----------+-----------------+----------+
+
+
+
 ---
 
 
