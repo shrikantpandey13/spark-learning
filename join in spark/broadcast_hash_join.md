@@ -177,14 +177,11 @@ Each Executor iterates through its local partition of the large sales_df. For ea
 
 The joined partitions from all Executors are combined to form the final resulting DataFrame. No shuffling of the large sales_df was needed.
 
-```text
-
 Result Partition 1                      Result Partition 2
 +-----------------------------------+      +------------------------------------------+
 | (1, 101, 50.0, 'Main St', 'NY')   |      | (2, 102, 150.0, 'Oak Ave', 'London')    |
 | (3, 101, 75.0, 'Main St', 'NY')   |      | (5, 102, 200.0, 'Oak Ave', 'London')    |
-| (6, 101, 90.0, 'Main St', 'NY')   |      | (4, 103, 25.0, 'Pine Plaza', 'Tokyo')   |
-| (9, 101, 65.0, 'Main St', 'NY')   |      | (8, 103, 45.0, 'Pine Plaza', 'Tokyo')   |
+| ...                               |      | ...                                      |
 +-----------------------------------+      +------------------------------------------+
                    |                                      |
                    +---------------\      /---------------+
@@ -201,4 +198,5 @@ Result Partition 1                      Result Partition 2
               | 5   | 102      | 200.0  | Oak Ave Shop    | London   |
               | 4   | 103      | 25.0   | Pine Plaza      | Tokyo    |
               | 8   | 103      | 45.0   | Pine Plaza      | Tokyo    |
+              | ... | ...      | ...    | ...             | ...      |
               +-----+----------+--------+-----------------+----------+
