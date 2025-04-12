@@ -37,6 +37,7 @@ Spark's Catalyst optimizer automatically decides whether to use a Broadcast Hash
 sales_df (Large) is partitioned across Executors.
 store_df (Small) exists as a DataFrame, known to the Driver.
 
+
 +---------------------+          +-----------------------+      +-----------------------+
 |    [ Spark Driver ] |          |    [ Executor 1 ]     |      |    [ Executor 2 ]     |
 |                     |          |-----------------------|      |-----------------------|
